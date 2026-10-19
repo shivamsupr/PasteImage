@@ -1,7 +1,11 @@
 # PasteImage
 
-Sublime Text 4 plugin for macOS. Paste an image from the clipboard into any
-file, and see it inline.
+**macOS only.** Sublime Text 4 plugin. Paste an image from the clipboard into
+any file, and see it inline.
+
+> Works on macOS only. It uses `pngpaste` to read the clipboard and `sips` to
+> read image sizes. On Linux or Windows the commands are disabled and show a
+> message. Pull requests that add other platforms are welcome.
 
 - Press **Cmd+Ctrl+Shift+V**. The image is saved as a PNG and a link is inserted at
   the cursor. Markdown files get `![](assets/note-1.png)`. Other files get the

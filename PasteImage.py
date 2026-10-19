@@ -45,6 +45,10 @@ def _setting(key, default=None):
     return _settings().get(key, default)
 
 
+def _is_macos():
+    return sublime.platform() == "osx"
+
+
 def _log(msg):
     print("[PasteImage] %s" % msg)
 
@@ -113,8 +117,18 @@ def _target_dir(view):
 class PasteImageCommand(sublime_plugin.TextCommand):
     """Save the clipboard image and insert a reference to it."""
 
+    def is_enabled(self):
+        return _is_macos()
+
     def run(self, edit):
         view = self.view
+        if not _is_macos():
+            sublime.error_message(
+                "PasteImage works on macOS only.\n\n"
+                "It relies on `pngpaste` and `sips`, which have no "
+                "equivalent on %s." % sublime.platform()
+            )
+            return
         if _setting("debug", False):
             _debug(
                 "paste_image start: view=%s sel=%s clipboard_text=%r"
@@ -344,6 +358,9 @@ def _render_previews(view):
 class PasteImagePreviewCommand(sublime_plugin.TextCommand):
     """Toggle inline previews of every image reference in the current file."""
 
+    def is_enabled(self):
+        return _is_macos()
+
     def run(self, edit):
         view = self.view
         vid = view.id()
@@ -399,6 +416,9 @@ class PasteImageListener(sublime_plugin.EventListener):
 
 def plugin_loaded():
     """Render previews for files already open when the plugin loads."""
+    if not _is_macos():
+        _log("this plugin works on macOS only (found %s); commands are disabled" % sublime.platform())
+        return
     for window in sublime.windows():
         for view in window.views():
             _auto_preview(view)
