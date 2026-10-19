@@ -7,7 +7,7 @@ Image references in a file can be previewed inline.
 Backed by `pngpaste` (https://github.com/jcsalterego/pngpaste).
 
 Commands:
-  paste_image          - save clipboard image, insert reference (Cmd+Ctrl+V)
+  paste_image          - save clipboard image, insert reference (Cmd+Ctrl+Shift+V)
   paste_image_preview  - toggle inline previews in the view (Cmd+Ctrl+P)
 
 Settings: see PasteImage.sublime-settings.
@@ -18,6 +18,7 @@ import os
 import re
 import shutil
 import subprocess
+import time
 
 import sublime
 import sublime_plugin
@@ -46,6 +47,20 @@ def _setting(key, default=None):
 
 def _log(msg):
     print("[PasteImage] %s" % msg)
+
+
+def _debug(msg):
+    if not _setting("debug", False):
+        return
+    line = "[PasteImage][debug %s] %s" % (time.strftime("%H:%M:%S"), msg)
+    print(line)
+    log_file = _setting("debug_log_file", "")
+    if log_file:
+        try:
+            with open(os.path.expanduser(log_file), "a") as fh:
+                fh.write(line + "\n")
+        except OSError:
+            pass
 
 
 def _find_pngpaste():
@@ -100,6 +115,11 @@ class PasteImageCommand(sublime_plugin.TextCommand):
 
     def run(self, edit):
         view = self.view
+        if _setting("debug", False):
+            _debug(
+                "paste_image start: view=%s sel=%s clipboard_text=%r"
+                % (view.id(), list(view.sel()), sublime.get_clipboard()[:60])
+            )
 
         pngpaste = _find_pngpaste()
         if not pngpaste:
@@ -137,6 +157,7 @@ class PasteImageCommand(sublime_plugin.TextCommand):
             if os.path.exists(abs_path):
                 os.remove(abs_path)
             if _setting("fallback_to_text_paste", True):
+                _debug("no image on clipboard, running text paste")
                 sublime.status_message(
                     "PasteImage: no image in clipboard - pasting text"
                 )
@@ -160,11 +181,24 @@ class PasteImageCommand(sublime_plugin.TextCommand):
         snippet = template.replace("{path}", link).replace("{name}", name)
 
         # Replace every selection, like a normal paste. Walk backwards so
-        # earlier regions stay valid after each replacement.
-        for region in reversed(list(view.sel())):
+        # earlier regions stay valid after each replacement. Then leave a
+        # plain cursor after each inserted link: view.replace() otherwise
+        # keeps the new text selected, and any following keystroke or paste
+        # would wipe it out.
+        regions = list(view.sel())
+        for region in reversed(regions):
             view.replace(edit, region, snippet)
+        # Earlier insertions shift later positions, so recompute from the front.
+        sel = view.sel()
+        sel.clear()
+        shift = 0
+        for region in regions:
+            end = region.begin() + shift + len(snippet)
+            sel.add(sublime.Region(end))
+            shift += len(snippet) - region.size()
 
         _log("saved %s" % abs_path)
+        _debug("inserted %r, sel now %s" % (snippet, list(view.sel())))
         sublime.status_message("PasteImage: saved %s" % abs_path)
 
         if _setting("preview_after_paste", True):
@@ -347,7 +381,16 @@ class PasteImageListener(sublime_plugin.EventListener):
 
     def on_modified_async(self, view):
         if view.id() in _previewing:
-            _render_previews(view)
+            count = _render_previews(view)
+            _debug("on_modified: view=%s re-rendered %d preview(s)" % (view.id(), count))
+
+    def on_text_command(self, view, name, args):
+        if _setting("debug", False) and name != "paste_image":
+            _debug("text command %r %r on view=%s sel=%s" % (name, args, view.id(), list(view.sel())))
+
+    def on_post_text_command(self, view, name, args):
+        if _setting("debug", False) and name in ("paste", "paste_and_indent"):
+            _debug("after %r: last line=%r" % (name, view.substr(view.line(view.sel()[0]))))
 
     def on_close(self, view):
         _previewing.discard(view.id())

@@ -3,13 +3,13 @@
 Sublime Text 4 plugin for macOS. Paste an image from the clipboard into any
 file, and see it inline.
 
-- Press **Cmd+Ctrl+V**. The image is saved as a PNG and a link is inserted at
+- Press **Cmd+Ctrl+Shift+V**. The image is saved as a PNG and a link is inserted at
   the cursor. Markdown files get `![](assets/note-1.png)`. Other files get the
   path.
 - Press **Cmd+Ctrl+P** to toggle inline previews of every image link in the
   file. Previews update as you edit, and show on their own when you open a
   file that has image links.
-- If the clipboard has no image, Cmd+Ctrl+V does a normal text paste.
+- If the clipboard has no image, Cmd+Ctrl+Shift+V does a normal text paste.
 
 ## Install
 
@@ -62,7 +62,7 @@ Change them in `Preferences > Package Settings > PasteImage > Key Bindings`:
 
 ```json
 [
-    { "keys": ["super+ctrl+v"], "command": "paste_image" },
+    { "keys": ["super+ctrl+shift+v"], "command": "paste_image" },
     { "keys": ["super+ctrl+p"], "command": "paste_image_preview" }
 ]
 ```
@@ -76,6 +76,11 @@ Open the console with <kbd>Ctrl</kbd>+<kbd>`</kbd>. Lines that start with
 - **Text pasted instead of an image**: the clipboard had no image. On macOS,
   <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>4</kbd> saves a screenshot to a file.
   Add <kbd>Ctrl</kbd> to copy it to the clipboard instead.
+- **The image link appears, then old text replaces it**: another app also
+  acts on the shortcut. Clipboard managers do this: they swap the clipboard
+  to an older item, send <kbd>Cmd</kbd>+<kbd>V</kbd>, and swap it back. Find
+  the app that owns the key, or rebind `paste_image` to a free key. Set
+  `"debug": true` to see every command that reaches the view in the console.
 
 ## Requirements
 

@@ -34,5 +34,12 @@
 
     // Full path to the `pngpaste` binary. Leave empty to search PATH and the
     // usual Homebrew and Nix locations.
-    "pngpaste_path": ""
+    "pngpaste_path": "",
+
+    // Print every command that touches the view to the console (Ctrl+`).
+    // Useful when a paste does something unexpected.
+    "debug": false,
+
+    // With `debug` on, also append the same lines to this file. Empty = off.
+    "debug_log_file": ""
 }
