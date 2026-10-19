@@ -7,13 +7,14 @@ any file, and see it inline.
 > read image sizes. On Linux or Windows the commands are disabled and show a
 > message. Pull requests that add other platforms are welcome.
 
-- Press **Cmd+Ctrl+Shift+V**. The image is saved as a PNG and a link is inserted at
+- Run **PasteImage: Paste Image from Clipboard** from the command palette, or
+  bind a key (see below). The image is saved as a PNG and a link is inserted at
   the cursor. Markdown files get `![](assets/note-1.png)`. Other files get the
   path.
-- Press **Cmd+Ctrl+P** to toggle inline previews of every image link in the
+- Run **PasteImage: Toggle Inline Preview** to toggle inline previews of every image link in the
   file. Previews update as you edit, and show on their own when you open a
   file that has image links.
-- If the clipboard has no image, Cmd+Ctrl+Shift+V does a normal text paste.
+- If the clipboard has no image, the paste command does a normal text paste.
 
 ## Install
 
@@ -62,7 +63,9 @@ Templates accept `{path}` (the link) and `{name}` (the file name).
 
 ## Key bindings
 
-Change them in `Preferences > Package Settings > PasteImage > Key Bindings`:
+The package ships no active key bindings, so it cannot clash with other
+packages. To add them, open `Preferences > Package Settings > PasteImage >
+Key Bindings` and put this in the right-hand pane:
 
 ```json
 [

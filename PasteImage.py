@@ -7,8 +7,8 @@ Image references in a file can be previewed inline.
 Backed by `pngpaste` (https://github.com/jcsalterego/pngpaste).
 
 Commands:
-  paste_image          - save clipboard image, insert reference (Cmd+Ctrl+Shift+V)
-  paste_image_preview  - toggle inline previews in the view (Cmd+Ctrl+P)
+  paste_image          - save clipboard image, insert reference
+  paste_image_preview  - toggle inline previews in the view
 
 Settings: see PasteImage.sublime-settings.
 """
