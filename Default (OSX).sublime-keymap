@@ -1,0 +1,4 @@
+[
+    { "keys": ["super+ctrl+v"], "command": "paste_image" },
+    { "keys": ["super+ctrl+p"], "command": "paste_image_preview" }
+]

@@ -1,0 +1,38 @@
+{
+    // Where to save pasted images.
+    //
+    // "" (default): save next to the current file, inside `assets_dir`, and
+    // insert a relative link. Unsaved buffers use `fallback_dir` instead.
+    //
+    // Any path, for example "~/Pictures/pasted": save every image there and
+    // insert an absolute link.
+    "save_dir": "",
+
+    // Folder name used next to the file when `save_dir` is empty.
+    "assets_dir": "assets",
+
+    // Used for unsaved buffers when `save_dir` is empty. The link is absolute.
+    "fallback_dir": "~/Downloads/sublime-paste",
+
+    // Text inserted in markdown files. {path} is the link, {name} the file name.
+    "markdown_template": "![]({path})",
+
+    // Text inserted in every other file type.
+    "plain_template": "{path}",
+
+    // When the clipboard holds no image, run a normal text paste instead.
+    "fallback_to_text_paste": true,
+
+    // Show the inline preview right after a paste.
+    "preview_after_paste": true,
+
+    // Show inline previews when a file with image references is opened.
+    "auto_preview": true,
+
+    // Preview images wider than this are scaled down (pixels).
+    "preview_max_width": 600,
+
+    // Full path to the `pngpaste` binary. Leave empty to search PATH and the
+    // usual Homebrew and Nix locations.
+    "pngpaste_path": ""
+}

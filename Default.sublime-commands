@@ -1,0 +1,12 @@
+[
+    { "caption": "PasteImage: Paste Image from Clipboard", "command": "paste_image" },
+    { "caption": "PasteImage: Toggle Inline Preview", "command": "paste_image_preview" },
+    {
+        "caption": "Preferences: PasteImage Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/PasteImage/PasteImage.sublime-settings",
+            "default": "{\n\t$0\n}\n"
+        }
+    }
+]

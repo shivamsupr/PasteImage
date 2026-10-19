@@ -1,0 +1,13 @@
+PasteImage
+==========
+
+Thanks for installing PasteImage.
+
+It needs `pngpaste` (macOS only):
+
+    brew install pngpaste
+
+Then copy an image and press Cmd+Ctrl+V in any file.
+Press Cmd+Ctrl+P to toggle inline previews.
+
+Settings: Preferences > Package Settings > PasteImage > Settings
