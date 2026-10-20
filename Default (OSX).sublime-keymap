@@ -1,7 +1,0 @@
-// PasteImage ships no active key bindings, so it cannot clash with keys from
-// other packages. To enable these, copy them into the right-hand pane of
-// Preferences > Package Settings > PasteImage > Key Bindings.
-[
-    // { "keys": ["super+ctrl+shift+v"], "command": "paste_image" },
-    // { "keys": ["super+ctrl+p"], "command": "paste_image_preview" }
-]

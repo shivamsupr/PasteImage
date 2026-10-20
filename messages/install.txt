@@ -9,6 +9,6 @@ It needs `pngpaste` (macOS only):
 
 Then copy an image and run "PasteImage: Paste Image from Clipboard"
 from the command palette. Key bindings are optional. Suggestions are in:
-Preferences > Package Settings > PasteImage > Key Bindings
+Preferences > Package Settings > PasteImage > Example Key Bindings
 
 Settings: Preferences > Package Settings > PasteImage > Settings

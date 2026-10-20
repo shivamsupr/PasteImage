@@ -65,7 +65,7 @@ Templates accept `{path}` (the link) and `{name}` (the file name).
 
 The package ships no active key bindings, so it cannot clash with other
 packages. To add them, open `Preferences > Package Settings > PasteImage >
-Key Bindings` and put this in the right-hand pane:
+Example Key Bindings` and copy this into the right-hand pane:
 
 ```json
 [

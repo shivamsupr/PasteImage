@@ -1,0 +1,8 @@
+// Sublime Text does not load this file. PasteImage ships no active key
+// bindings, so it cannot clash with keys from other packages. To use these,
+// copy them into the right-hand pane of
+// Preferences > Package Settings > PasteImage > Example Key Bindings.
+[
+    { "keys": ["super+ctrl+shift+v"], "command": "paste_image" },
+    { "keys": ["super+ctrl+p"], "command": "paste_image_preview" }
+]
